@@ -1,0 +1,468 @@
+/* =====================
+   Global Reset & Base
+   ===================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg-primary: #0f0f1a;
+  --bg-secondary: #1a1a2e;
+  --bg-card: #16213e;
+  --bg-card-hover: #1e2a4a;
+  --accent: #e94560;
+  --accent-live: #00d4aa;
+  --text-primary: #f0f0f0;
+  --text-secondary: #a0a0b0;
+  --text-muted: #6b6b80;
+  --border: #2a2a3e;
+  --border-light: #3a3a5e;
+  --score-bg: #0d1b2a;
+  --tab-active-bg: #e94560;
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  --radius: 12px;
+  --radius-sm: 6px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+/* =====================
+   App Layout
+   ===================== */
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* =====================
+   Header
+   ===================== */
+.app-header {
+  padding: 28px 0 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.header-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-icon {
+  font-size: 2rem;
+}
+
+.app-header h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.5px;
+}
+
+.header-date {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+/* =====================
+   Tab Navigation
+   ===================== */
+.tab-nav {
+  display: flex;
+  gap: 8px;
+  padding: 20px 0 0;
+}
+
+.tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 24px;
+  border: 1px solid var(--border-light);
+  border-radius: 50px;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  letter-spacing: 0.3px;
+}
+
+.tab-btn:hover {
+  border-color: var(--accent);
+  color: var(--text-primary);
+  background: rgba(233, 69, 96, 0.08);
+}
+
+.tab-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-live);
+  animation: pulse 1.5s infinite;
+  display: inline-block;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+/* =====================
+   Main Content
+   ===================== */
+.app-main {
+  flex: 1;
+  padding: 20px 0;
+}
+
+.controls-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.match-count {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+.refresh-btn {
+  padding: 6px 18px;
+  border: 1px solid var(--border-light);
+  border-radius: 50px;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.refresh-btn:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.refresh-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.last-updated {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+
+/* =====================
+   Loading State
+   ===================== */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  gap: 16px;
+  color: var(--text-secondary);
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* =====================
+   Error State
+   ===================== */
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  gap: 16px;
+  text-align: center;
+}
+
+.error-message {
+  color: var(--accent);
+  font-size: 0.95rem;
+}
+
+.retry-btn {
+  padding: 10px 28px;
+  border: 1px solid var(--accent);
+  border-radius: 50px;
+  background: transparent;
+  color: var(--accent);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.retry-btn:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* =====================
+   Scores List
+   ===================== */
+.scores-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.tournament-group {
+  margin-bottom: 24px;
+}
+
+.tournament-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0 8px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 8px;
+}
+
+.tournament-flag {
+  font-size: 1.1rem;
+}
+
+.tournament-name {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  gap: 12px;
+  color: var(--text-muted);
+}
+
+.empty-icon {
+  font-size: 3rem;
+}
+
+.empty-state p {
+  font-size: 0.95rem;
+}
+
+/* =====================
+   Match Card
+   ===================== */
+.match-card {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 6px;
+  transition: all 0.2s ease;
+  cursor: default;
+}
+
+.match-card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-light);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow);
+}
+
+.match-card.live {
+  border-left: 3px solid var(--accent-live);
+}
+
+.match-card.finished {
+  opacity: 0.75;
+}
+
+/* Team blocks */
+.team {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.team-home {
+  text-align: right;
+  align-items: flex-end;
+}
+
+.team-away {
+  text-align: left;
+  align-items: flex-start;
+}
+
+.team-name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 180px;
+}
+
+.team-shortname {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* Score block */
+.score-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 90px;
+}
+
+.score-display {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--score-bg);
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+
+.score-value {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  min-width: 22px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.score-sep {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  font-weight: 300;
+}
+
+.match-status {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 50px;
+}
+
+.status-live {
+  background: rgba(0, 212, 170, 0.15);
+  color: var(--accent-live);
+}
+
+.status-finished {
+  background: rgba(160, 160, 176, 0.1);
+  color: var(--text-muted);
+}
+
+.status-notstarted {
+  background: rgba(233, 69, 96, 0.1);
+  color: var(--accent);
+}
+
+.status-default {
+  background: rgba(160, 160, 176, 0.1);
+  color: var(--text-muted);
+}
+
+/* =====================
+   Footer
+   ===================== */
+.app-footer {
+  text-align: center;
+  padding: 20px 0;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+/* =====================
+   Responsive
+   ===================== */
+@media (max-width: 600px) {
+  .app-header h1 {
+    font-size: 1.4rem;
+  }
+
+  .header-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .match-card {
+    grid-template-columns: 1fr auto 1fr;
+    gap: 8px;
+    padding: 12px 12px;
+  }
+
+  .team-name {
+    font-size: 0.82rem;
+    max-width: 110px;
+  }
+
+  .score-value {
+    font-size: 1.1rem;
+  }
+
+  .score-display {
+    padding: 5px 10px;
+  }
+}
